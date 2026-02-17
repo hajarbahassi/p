@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIYAD AUTO PRESTIGE | Expérience Tactile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@700;900&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --red: #C8102E; --gold: #B4975A; --blue: #002349; --light: #f9f9f9; --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Outfit', sans-serif; margin: 0; background: var(--light); color: var(--blue); overflow-x: hidden; transition: background 0.8s ease; }
+        
+        /* Tout ce qui est cliquable doit montrer un curseur */
+        a, button, .card, .logo-container, .close-btn { cursor: pointer; transition: var(--transition); text-decoration: none; }
+
+        .top-bar { background: var(--red); color: white; text-align: center; padding: 12px; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; }
+
+        /* Navigation Interactive */
+        nav { background: rgba(255,255,255,0.98); padding: 12px 5%; border-bottom: 4px solid var(--red); position: sticky; top: 0; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        
+        .logo-container:hover { transform: scale(1.03); opacity: 0.8; }
+        .logo-text { font-family: 'Bodoni Moda', serif; font-size: 1.2rem; font-weight: 900; color: var(--blue); line-height: 1; }
+        .logo-text span { display: block; font-size: 0.65rem; color: var(--red); letter-spacing: 2px; }
+
+        .nav-phone { background: var(--blue); color: white !important; padding: 10px 15px; border-radius: 50px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
+        .nav-phone:hover { background: var(--red); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(200, 16, 46, 0.3); }
+
+        /* Hero */
+        .hero { height: 75vh; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('hero.jpg') center/cover no-repeat; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; }
+        .hero h1 { font-family: 'Bodoni Moda', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0; }
+        .hero-btn { margin-top: 30px; background: var(--gold); color: white; padding: 15px 35px; border-radius: 50px; font-weight: 900; text-transform: uppercase; border: none; font-size: 0.9rem; letter-spacing: 1px; }
+        .hero-btn:hover { background: white; color: var(--blue); transform: scale(1.1); }
+
+        /* Grilles & Cartes */
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 5%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; }
+        .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); border-color: var(--gold); }
+        .card img { width: 100%; height: 320px; object-fit: cover; transition: 0.6s; }
+        .card:hover img { transform: scale(1.08); }
+        
+        .card-badge { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; font-weight: 800; font-size: 0.7rem; color: var(--red); }
+
+        .card-body { padding: 25px; text-align: center; }
+        .btn-card { display: inline-block; margin-top: 15px; padding: 10px 25px; background: var(--blue); color: white; border-radius: 8px; font-weight: 600; font-size: 0.8rem; }
+        .card:hover .btn-card { background: var(--red); }
+
+        /* Section Vintage */
+        #vintage-section { background: #070707; color: white; padding: 80px 0; border-top: 6px solid var(--gold); }
+        #vintage-section .card { background: #151515; border: 1px solid #333; }
+        #vintage-section .card-body h3 { color: white; }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+        .modal-content { background: white; margin: 10vh auto; padding: 40px; border-radius: 25px; width: 85%; max-width: 400px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #999; }
+
+        /* WhatsApp Button */
+        .btn-whatsapp { background: #25d366; color: white; width: 100%; padding: 18px; border: none; border-radius: 15px; font-weight: 800; font-size: 1rem; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-whatsapp:hover { transform: scale(1.05); background: #1ebe57; }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body onclick="playJazz()">
+
+<div id="player" style="position: absolute; top:-999px;"></div>
+
+<div class="top-bar">CLIQUEZ SUR UN VÉHICULE POUR RÉSERVER</div>
+
+<nav>
+    <div class="nav-content">
+        <a href="#" class="logo-container">
+            <div class="logo-text">RIYAD AUTO<span>PRESTIGE</span></div>
+        </a>
+        <a href="tel:0628875855" class="nav-phone">
+            <i class="fas fa-phone-alt"></i> 06 28 87 58 55
+        </a>
+    </div>
+</nav>
+
+<section id="modern-section">
+    <div class="hero">
+        <h1>L'ÉLITE À RABAT</h1>
+        <p style="letter-spacing: 5px; color: var(--gold); font-weight: 700;">LOCATION & CONCIERGERIE</p>
+        <button class="hero-btn" onclick="document.getElementById('modern-list').scrollIntoView()">Voir la flotte</button>
+    </div>
+
+    <div id="modern-list" class="container">
+        <h2 style="text-align:center; font-family:'Bodoni Moda'; font-size: 2.5rem; margin-bottom: 40px;">LUXE MODERNE</h2>
+        <div class="grid">
+            <div class="card" onclick="openModal('Ford Mustang GT')">
+                <div class="card-badge">DISPONIBLE</div>
+                <img src="mustang.jpg">
+                <div class="card-body">
+                    <h3>Ford Mustang GT</h3>
+                    <p style="color:var(--red); font-weight:900;">1200 DH / Jour</p>
+                    <div class="btn-card">RÉSERVER MAINTENANT</div>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('BMW M-Sport')">
+                <div class="card-badge">DISPONIBLE</div>
+                <img src="bmw.jpg">
+                <div class="card-body">
+                    <h3>BMW M-Sport</h3>
+                    <p style="color:var(--red); font-weight:900;">900 DH / Jour</p>
+                    <div class="btn-card">RÉSERVER MAINTENANT</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="vintage-section">
+    <div class="container">
+        <h2 style="text-align:center; font-family:'Bodoni Moda'; font-size: 2.5rem; margin-bottom: 40px; color:var(--gold);">COLLECTION HÉRITAGE</h2>
+        <div class="grid">
+            <div class="card" onclick="openModal('Mercedes S-Class W140')">
+                <div class="card-badge" style="color:var(--gold)">VINTAGE</div>
+                <img src="mercedes.jpg">
+                <div class="card-body">
+                    <h3>Mercedes S-Class W140</h3>
+                    <p style="color:var(--gold); font-weight:900;">1500 DH / Jour</p>
+                    <div class="btn-card" style="background:var(--gold)">RÉSERVER MAINTENANT</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle" style="font-family:'Bodoni Moda'; color:var(--blue);">RÉSERVATION</h2>
+        <p id="modalSub" style="font-weight: 700; color: var(--gold);"></p>
+        <p style="font-size: 0.9rem; color: #666;">Cliquez ci-dessous pour finaliser sur WhatsApp avec notre agent.</p>
+        
+        <button class="btn-whatsapp" onclick="sendToWhatsApp()">
+            <i class="fab fa-whatsapp"></i> CONTACTER L'AGENT
+        </button>
+    </div>
+</div>
+
+<script>
+    // YouTube Jazz
+    var tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '0', width: '0', videoId: 'nv_2rz5BFDA',
+            playerVars: { 'start': 1924, 'loop': 1, 'playlist': 'nv_2rz5BFDA' }
+        });
+    }
+    function playJazz() { if(player && player.playVideo) player.playVideo(); }
+
+    // Modal & WhatsApp
+    let selectedCar = "";
+    function openModal(carName) {
+        selectedCar = carName;
+        document.getElementById('modalSub').innerText = carName;
+        document.getElementById('bookingModal').style.display = "block";
+    }
+    function closeModal() { document.getElementById('bookingModal').style.display = "none"; }
+
+    function sendToWhatsApp() {
+        const message = `Bonjour Riyad Auto Prestige, je souhaite réserver la ${selectedCar}. Merci de me donner les disponibilités.`;
+        window.open(`https://wa.me/212628875855?text=${encodeURIComponent(message)}`, '_blank');
+        closeModal();
+    }
+
+    // Scroll Background Change
+    window.addEventListener('scroll', function() {
+        const vintage = document.getElementById('vintage-section');
+        if(window.scrollY > (vintage.offsetTop - 300)) {
+            document.body.style.background = "#070707";
+        } else {
+            document.body.style.background = "#f9f9f9";
+        }
+    });
+
+    // Fermer modal en cliquant à côté
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('bookingModal')) closeModal();
+    }
+</script>
+
+</body>
+</html>
